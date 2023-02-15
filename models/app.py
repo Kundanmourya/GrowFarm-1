@@ -189,7 +189,7 @@ def weather_fetch(city_name):
 def home():
     st.markdown("<h1 style='text-align:center'>Welcome to the Homepage</h1>", unsafe_allow_html=True)
         
-    image = Image.open('C:/Users/Sowmen/Desktop/TY_Project/images/first.png')
+    image = Image.open('images/first.png')
     image = image.resize((800,200))
     st.image(image, use_column_width=True)
     
