@@ -62,7 +62,7 @@ disease_classes =['Apple___Apple_scab',
                'Tomato___healthy']
 
 
-disease_model_path = 'plantdisease.pth'
+disease_model_path = 'models/plantdisease.pth'
 disease_model = torch.load(disease_model_path, map_location=torch.device('cpu'))
 print(disease_model.eval())
 
