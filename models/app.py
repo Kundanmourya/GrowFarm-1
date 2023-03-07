@@ -5,6 +5,7 @@ import pickle
 import os
 import io
 import torch
+import sklearn
 import warnings
 import requests
 from streamlit import config
