@@ -20,7 +20,7 @@ from cities import arr_cities
 
 #------------------------- READING FILES and CLASSES -------------------------#
 
-fertilizer_df = pd.read_csv('data/fertilizer.csv')
+fertilizer_df = pd.read_csv('models/data/fertilizer.csv')
 
 disease_classes =['Apple___Apple_scab',
                'Apple___Black_rot',
