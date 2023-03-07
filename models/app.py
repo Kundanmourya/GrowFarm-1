@@ -306,7 +306,7 @@ def Crop_Recommender():
 
         pred_df = pd.DataFrame([single_pred])
         if st.button('Predict'):
-            loaded_model = load_model('models/RandomForest.pkl')
+            loaded_model = load_model('RandomForest.pkl')
             prediction = loaded_model.predict(pred_df)
             col1.write('''
         		    ## Results 🔍 
@@ -459,6 +459,7 @@ def main():
     st.set_page_config(page_title="Recommender System", page_icon = ":herb:", layout="wide")
 
     # sidebar for navigation
+    
     from streamlit_option_menu import option_menu
    
     selected = option_menu(None, ["HOME","Crop Recommend","Fertilizer Prediction","Plant Disease Prediction"], 
