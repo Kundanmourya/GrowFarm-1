@@ -14,7 +14,7 @@ from fertilizer import fertilizer_dic
 from utils.model import ResNet9
 from utils.disease import disease_dic
 from streamlit_lottie import st_lottie
-from cities import arr_cities
+#from cities import arr_cities
 
 
 
@@ -350,7 +350,7 @@ def Fertilizers_Prediction():
         st.empty()
 
     if st.button("Predict"):
-        st.write("<div style='text-align: center;'><h3><b> Prediction 🔍 </</b></h4>i3v>", unsafe_allow_html=True)
+        st.write("<div style='text-align: center;'><h3><b> Prediction 🔍 </b></h4>", unsafe_allow_html=True)
         prediction = predict_fertilizer(crop_name, N, P, K)
         st.markdown("<div style='text-align: center;'><p>" + prediction + "</p></div>", unsafe_allow_html=True)            
 
