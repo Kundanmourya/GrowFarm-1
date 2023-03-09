@@ -419,7 +419,7 @@ def Crop_Disease_Prediction():
         slot.text('Running inference....')
         st.image(image, caption="Input Image", width = 300)
         image = transform(image)
-        loaded_model = torch.load('plantdisease.pth')
+        loaded_model = torch.load('models/plantdisease.pth')
         prediction = predict_image(image,loaded_model)
         slot.empty()
         st.write(
