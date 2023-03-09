@@ -306,7 +306,7 @@ def Crop_Recommender():
 
         pred_df = pd.DataFrame([single_pred])
         if st.button('Predict'):
-            loaded_model = load_model("models/XGBoost.pkl")
+            loaded_model = load_model("models/RandomForest.pkl")
             prediction = loaded_model.predict(pred_df)
             col1.write('''
         		    ## Results 🔍 
