@@ -160,27 +160,7 @@ def predict_image(img, model=disease_model):
     prediction = disease_classes[preds[0].item()]
     # Retrieve the class label
     return prediction
-
-
-
-#------------------------- CUSTOM FUNCTIONS -------------------------#
-
-
-def weather_fetch(city_name):
-    api_key = "<weather_api_key>"
-    base_url = "http://api.openweathermap.org/data/2.5/weather?"
-
-    complete_url = base_url + "appid=" + api_key + "&q=" + city_name
-    response = requests.get(complete_url)
-    x = response.json()
-
-    if x["cod"] != "404":
-        y = x.get("main", {})
-        temperature = round((y.get("temp", 0) - 273.15), 2)
-        humidity = y.get("humidity", 0)
-        return temperature, humidity
-    else:
-        return None
+  
 
     
 
@@ -287,9 +267,6 @@ def Crop_Recommender():
         rainfall = st.number_input("Rainfall in mm", 0.0, 100000.0)
         
         state = st.selectbox("Select State", ["Select State"] + state_arr)
-        if state != "Select State":
-            cities = arr_cities[state]
-            city = st.selectbox("Select City", ["Select City"] + cities)
 
         
         
