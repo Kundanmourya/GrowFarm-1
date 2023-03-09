@@ -14,7 +14,7 @@ from fertilizer import fertilizer_dic
 from utils.model import ResNet9
 from utils.disease import disease_dic
 from streamlit_lottie import st_lottie
-#from cities import arr_cities
+
 
 
 
