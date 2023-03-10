@@ -423,6 +423,9 @@ def Crop_Disease_Prediction():
             loaded_model = torch.load('models/plantdisease.pth')
             prediction = predict_image(image, loaded_model)
             slot.empty()
+            st.write(
+                  """
+                  """)
             prediction = disease_dic[prediction]
             st.markdown("<div style='text-align:center'><p>Prediction: {} </p></div>".format(prediction), unsafe_allow_html=True)       
         else:
