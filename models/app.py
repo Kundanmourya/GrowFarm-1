@@ -416,18 +416,19 @@ def Crop_Disease_Prediction():
         slot = st.empty()
 
            # img = file.read()
-        slot.text('Running inference....')
-        st.image(image, caption="Input Image", width = 300)
-        image = transform(image)
-        loaded_model = torch.load('models/plantdisease.pth')
-        prediction = predict_image(image,loaded_model)
-        slot.empty()
-        st.write(
-            """
-            """)
-        prediction = disease_dic[prediction]
-        st.markdown("<div style='text-align:centre; overflow:hidden;'><p>Prediction: {}</p></div>".format(prediction), unsafe_allow_html=True)           
+        if image is not None:
+            slot.text('Running inference....')
+            st.image(image, caption="Input Image", width=300)
+            image = transform(image)
+            loaded_model = torch.load('models/plantdisease.pth')
+            prediction = predict_image(image, loaded_model)
+            slot.empty()
+            prediction = disease_dic[prediction]
+            st.markdown("<div style='text-align:center'><p>Prediction: {}</p></div>".format(prediction), unsafe_allow_html=True)       
+        else:
+            st.error("Invalid image. Please upload a valid image file.")  
 
+            
             
 
 #------------------------- MAIN FUNCTION -------------------------#
