@@ -424,7 +424,7 @@ def Crop_Disease_Prediction():
             prediction = predict_image(image, loaded_model)
             slot.empty()
             prediction = disease_dic[prediction]
-            st.markdown("<div style='text-align:center'><p>Prediction: {}</p></div>".format(prediction), unsafe_allow_html=True)       
+            st.markdown("<div style='text-align:center'><p>Prediction: </p></div>".format(prediction), unsafe_allow_html=True)       
         else:
             st.error("Invalid image. Please upload a valid image file.")  
 
