@@ -17,7 +17,6 @@ from streamlit_lottie import st_lottie
 
 
 
-
 #------------------------- READING FILES and CLASSES -------------------------#
 
 fertilizer_df = pd.read_csv('models/data/fertilizer.csv')
@@ -160,14 +159,34 @@ def predict_image(img, model=disease_model):
     prediction = disease_classes[preds[0].item()]
     # Retrieve the class label
     return prediction
-  
+
+
+
+#------------------------- CUSTOM FUNCTIONS -------------------------#
+
+
+def weather_fetch(city_name):
+    api_key = "<weather_api_key>"
+    base_url = "http://api.openweathermap.org/data/2.5/weather?"
+
+    complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+    response = requests.get(complete_url)
+    x = response.json()
+
+    if x["cod"] != "404":
+        y = x.get("main", {})
+        temperature = round((y.get("temp", 0) - 273.15), 2)
+        humidity = y.get("humidity", 0)
+        return temperature, humidity
+    else:
+        return None
 
     
 
 #------------------------- HOME PAGE -------------------------#
 
 def home():
-    st.markdown("<h1 style='text-align:center'>Welcome to the Homepage</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align:center'>Welcome to GrowFarm</h1>", unsafe_allow_html=True)
         
     image = Image.open('images/first.png')
     image = image.resize((800,200))
@@ -286,7 +305,7 @@ def Crop_Recommender():
             loaded_model = load_model("models/RandomForest.pkl")
             prediction = loaded_model.predict(pred_df)
             col1.write('''
-        		    ## Results 🔍 
+        		      ## Results 🔍 
         		    ''')
             col1.success(f"{prediction.item().title()} are recommended by the A.I for your farm.")
 
@@ -327,7 +346,7 @@ def Fertilizers_Prediction():
         st.empty()
 
     if st.button("Predict"):
-        st.write("<div style='text-align: center;'><h3><b> Prediction 🔍 </b></h4>", unsafe_allow_html=True)
+        st.write("<div style='text-align: center;'><h3><b> Prediction 🔍 </</b></h4>i3v>", unsafe_allow_html=True)
         prediction = predict_fertilizer(crop_name, N, P, K)
         st.markdown("<div style='text-align: center;'><p>" + prediction + "</p></div>", unsafe_allow_html=True)            
 
@@ -345,53 +364,62 @@ def predict_image(img, model):
     """Converts image to array and return the predicted class
         with highest probability"""
     # Convert to a batch of 1
-    xb = to_device(img.unsqueeze(0), device)
-    # Get predictions from model
-    yb = model(xb)
-    # Pick index with highest probability
-    _, preds  = torch.max(yb, dim=1)
-    # Retrieve the class label
-    labels = ['Apple___Apple_scab',
-         'Apple___Black_rot',
-         'Apple___Cedar_apple_rust',
-         'Apple___healthy',
-         'Blueberry___healthy',
-         'Cherry_(including_sour)___Powdery_mildew',
-         'Cherry_(including_sour)___healthy',
-         'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot',
-         'Corn_(maize)___Common_rust_',
-         'Corn_(maize)___Northern_Leaf_Blight',
-         'Corn_(maize)___healthy',
-         'Grape___Black_rot',
-         'Grape___Esca_(Black_Measles)',
-         'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)',
-         'Grape___healthy',
-         'Orange___Haunglongbing_(Citrus_greening)',
-         'Peach___Bacterial_spot',
-         'Peach___healthy',
-         'Pepper,_bell___Bacterial_spot',
-         'Pepper,_bell___healthy',
-         'Potato___Early_blight',
-         'Potato___Late_blight',
-         'Potato___healthy',
-         'Raspberry___healthy',
-         'Soybean___healthy',
-         'Squash___Powdery_mildew',
-         'Strawberry___Leaf_scorch',
-         'Strawberry___healthy',
-         'Tomato___Bacterial_spot',
-         'Tomato___Early_blight',
-         'Tomato___Late_blight',
-         'Tomato___Leaf_Mold',
-         'Tomato___Septoria_leaf_spot',
-         'Tomato___Spider_mites Two-spotted_spider_mite',
-         'Tomato___Target_Spot',
-         'Tomato___Tomato_Yellow_Leaf_Curl_Virus',
-         'Tomato___Tomato_mosaic_virus',
-         'Tomato___healthy'
-      ]
-
-    return labels[preds[0].item()]
+    try:
+        xb = to_device(img.unsqueeze(0), device)
+        print('xb shape: ', xb.shape)
+        # Get predictions from model
+        yb = model(xb)
+        # Pick index with highest probability
+        _, preds  = torch.max(yb, dim=1)
+        # Retrieve the class label
+        labels = ['Apple___Apple_scab',
+            'Apple___Black_rot',
+            'Apple___Cedar_apple_rust',
+            'Apple___healthy',
+            'Blueberry___healthy',
+            'Cherry_(including_sour)___Powdery_mildew',
+            'Cherry_(including_sour)___healthy',
+            'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot',
+            'Corn_(maize)___Common_rust_',
+            'Corn_(maize)___Northern_Leaf_Blight',
+            'Corn_(maize)___healthy',
+            'Grape___Black_rot',
+            'Grape___Esca_(Black_Measles)',
+            'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)',
+            'Grape___healthy',
+            'Orange___Haunglongbing_(Citrus_greening)',
+            'Peach___Bacterial_spot',
+            'Peach___healthy',
+            'Pepper,_bell___Bacterial_spot',
+            'Pepper,_bell___healthy',
+            'Potato___Early_blight',
+            'Potato___Late_blight',
+            'Potato___healthy',
+            'Raspberry___healthy',
+            'Soybean___healthy',
+            'Squash___Powdery_mildew',
+            'Strawberry___Leaf_scorch',
+            'Strawberry___healthy',
+            'Tomato___Bacterial_spot',
+            'Tomato___Early_blight',
+            'Tomato___Late_blight',
+            'Tomato___Leaf_Mold',
+            'Tomato___Septoria_leaf_spot',
+            'Tomato___Spider_mites Two-spotted_spider_mite',
+            'Tomato___Target_Spot',
+            'Tomato___Tomato_Yellow_Leaf_Curl_Virus',
+            'Tomato___Tomato_mosaic_virus',
+            'Tomato___healthy',
+            'image___not_found'
+        ]
+        
+        if labels[preds[0].item()] == 'image___not_found':
+            return 'image not found'
+        
+        return labels[preds[0].item()]
+    
+    except:
+        return 'image not found'
 
 device = get_default_device()
 
@@ -407,8 +435,6 @@ def Crop_Disease_Prediction():
     st.title("Crop Disease Prediction")
 
     file_up = st.file_uploader("Upload a Photo",type=['png','jpg','jpeg'])
-    if file_up is None:    
-        return
     print(file_up)
     image = Image.open(file_up)
     
@@ -416,28 +442,38 @@ def Crop_Disease_Prediction():
         slot = st.empty()
 
            # img = file.read()
-        if image is not None:
-            slot.text('Running inference....')
-            st.image(image, caption="Input Image", width=300)
-            image = transform(image)
-            loaded_model = torch.load('models/plantdisease.pth')
+        slot.text('Running inference....')
+        st.image(image, caption="Input Image", width = 300)
+        image = transform(image)
+        loaded_model = torch.load('models/plantdisease.pth')
+        # prediction = predict_image(image,loaded_model)
+        
+        try:
             prediction = predict_image(image, loaded_model)
+        except ValueError:
+            # slot.empty()
+            st.error('Image not found in model. Please upload a valid image.')
+            return
+        if prediction == 'image not found':
+            # st.error('Invalid')
+            # return
             slot.empty()
-            st.write(
-                  """
-                  """)
-            prediction = disease_dic[prediction]
-            st.markdown("<div style='text-align:center'><p>Prediction: {} </p></div>".format(prediction), unsafe_allow_html=True)       
-        else:
-            st.error("Invalid image. Please upload a valid image file.")  
+            st.error('The uploaded image was not found in the model. Please upload a different image.')
+            return
 
-            
+        slot.empty()
+        st.write(
+            """
+            """)
+        prediction = disease_dic[prediction]
+        st.markdown("<div style='text-align:center; overflow:hidden;'>Prediction: {}".format(prediction), unsafe_allow_html=True)           
+
             
 
 #------------------------- MAIN FUNCTION -------------------------#
             
 def main():
-    st.set_page_config(page_title="Recommender System", page_icon = ":herb:", layout="wide")
+    st.set_page_config(page_title="GrowFarm", page_icon = ":herb:", layout="wide")
 
     # sidebar for navigation
     
