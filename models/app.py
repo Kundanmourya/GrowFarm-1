@@ -435,6 +435,8 @@ def Crop_Disease_Prediction():
     st.title("Crop Disease Prediction")
 
     file_up = st.file_uploader("Upload a Photo",type=['png','jpg','jpeg'])
+    if file_up is None:
+        return
     print(file_up)
     image = Image.open(file_up)
     
